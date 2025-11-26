@@ -1,8 +1,9 @@
 package com.example.service;
 
+import com.example.port.in.ReserveItemUseCase;
 import com.example.port.out.InventoryItemRepository;
 
-public class InventoryItemService implements InventoryItemRepository {
+public class InventoryItemService implements ReserveItemUseCase {
 
     private final InventoryItemRepository inventoryItemRepository;
 

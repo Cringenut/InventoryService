@@ -1,5 +1,10 @@
 package com.example.port.out;
 
+import com.example.model.InventoryItem;
+
+import java.util.Optional;
+
 public interface InventoryItemRepository {
-    void reserve(String sku, int quantity);
+    Optional<InventoryItem> findBySku(String sku);
+    boolean save(InventoryItem item);
 }
