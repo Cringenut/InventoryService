@@ -23,9 +23,15 @@ public class MemoryInventoryItemRepository implements InventoryItemRepository {
     }
 
     @Override
-    public boolean save(InventoryItem item) {
-        jpaRepository.save(toEntity(item));
-        return true;
+    public boolean save(InventoryItem item, long expectedVersion) {
+        int updated = jpaRepository.updateInventory(
+                item.sku(),
+                item.available(),
+                item.reserved(),
+                item.version(),
+                expectedVersion
+        );
+        return updated == 1;
     }
 
     private InventoryItem toDomain(InventoryItemEntity e) {

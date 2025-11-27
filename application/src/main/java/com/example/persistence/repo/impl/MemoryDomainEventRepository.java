@@ -20,13 +20,12 @@ public class MemoryDomainEventRepository implements DomainEventRepository {
     }
 
     @Override
-    public boolean save(DomainEvent event) {
+    public void save(DomainEvent event) {
         DomainEventEntity entity = new DomainEventEntity();
         entity.setSku(event.getSku());
         entity.setType(event.getType());
         entity.setCreatedAt(event.getCreatedAt());
         entity.setPayload(event.getPayload());
         repo.save(entity);
-        return true;
     }
 }

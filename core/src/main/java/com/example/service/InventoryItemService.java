@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.event.impl.ItemReservedEvent;
+import com.example.exception.ConcurrencyException;
 import com.example.model.InventoryItem;
 import com.example.port.in.ReserveItemUseCase;
 import com.example.port.out.DomainEventRepository;
@@ -18,22 +19,29 @@ public class InventoryItemService implements ReserveItemUseCase {
 
     @Override
     public void reserve(String sku, int qty) {
-        InventoryItem currentItem = inventoryItemRepository.findBySku(sku).orElse(null);
-        InventoryItem changedItem = currentItem.reserve(qty);
-        boolean success = inventoryItemRepository.save(changedItem);
+        for (int attempt = 0; attempt < 3; attempt++) {
 
-        if (!success)
-            throw new RuntimeException("Failed to reserve item");
+            InventoryItem currentItem = inventoryItemRepository.findBySku(sku)
+                    .orElseThrow(() -> new RuntimeException("InventoryItem not found"));
 
-        ItemReservedEvent event = new ItemReservedEvent(
-                changedItem.sku(),
-                "{ \"qty\": %d }".formatted(qty)
-        );
+            long expectedVersion = currentItem.version();
+            InventoryItem changedItem = currentItem.reserve(qty);
 
-        success = domainEventRepository.save(event);
+            boolean updated = inventoryItemRepository.save(changedItem, expectedVersion);
 
-        if (!success)
-            throw new RuntimeException("Failed to reserve item");
+            if (!updated) {
+                continue; // retry
+            }
 
+            ItemReservedEvent event = new ItemReservedEvent(
+                    changedItem.sku(),
+                    "{ \"qty\": %d }".formatted(qty)
+            );
+
+            domainEventRepository.save(event);
+            return;
+        }
+
+        throw new ConcurrencyException("Failed to reserve item");
     }
 }

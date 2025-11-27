@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface InventoryItemRepository {
     Optional<InventoryItem> findBySku(String sku);
-    boolean save(InventoryItem item);
+    boolean save(InventoryItem item, long expectedVersion);
 }
