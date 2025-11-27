@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.port.out.DomainEventRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.example.port.in.ReserveItemUseCase;
@@ -10,7 +11,8 @@ import com.example.service.InventoryItemService;
 public class CoreConfig {
 
     @Bean
-    public ReserveItemUseCase reserveItemUseCase(InventoryItemRepository repository) {
-        return new InventoryItemService(repository);
+    public ReserveItemUseCase reserveItemUseCase(InventoryItemRepository repository,
+                                                 DomainEventRepository eventRepository) {
+        return new InventoryItemService(repository, eventRepository);
     }
 }
