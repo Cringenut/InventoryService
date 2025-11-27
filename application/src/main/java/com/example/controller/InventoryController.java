@@ -18,7 +18,7 @@ public class InventoryController {
 
     @PostMapping("/{sku}/reserve")
     public void reserve(@PathVariable String sku) {
-
+        reserveItemUseCase.reserve(sku, 6);
     }
 
 }

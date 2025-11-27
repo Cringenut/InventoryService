@@ -13,6 +13,6 @@ public class InventoryItemService implements ReserveItemUseCase {
 
     @Override
     public void reserve(String sku, int quantity) {
-
+        System.out.println("Reserve sku " + sku + " with quantity " + quantity);
     }
 }
