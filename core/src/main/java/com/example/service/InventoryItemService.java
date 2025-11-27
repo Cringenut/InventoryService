@@ -35,7 +35,7 @@ public class InventoryItemService implements ReserveItemUseCase {
 
             ItemReservedEvent event = new ItemReservedEvent(
                     changedItem.sku(),
-                    "{ \"qty\": %d }".formatted(qty)
+                    "{ \"qty\": %d }".formatted(qty) // { "qty": - }
             );
 
             domainEventRepository.save(event);

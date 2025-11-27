@@ -4,11 +4,7 @@ import com.example.event.DomainEvent;
 import com.example.persistence.entity.DomainEventEntity;
 import com.example.persistence.repo.SpringDataDomainEventJpaRepository;
 import com.example.port.out.DomainEventRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class MemoryDomainEventRepository implements DomainEventRepository {

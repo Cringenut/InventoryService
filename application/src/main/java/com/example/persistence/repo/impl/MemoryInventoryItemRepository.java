@@ -4,6 +4,7 @@ import com.example.model.InventoryItem;
 import com.example.persistence.entity.InventoryItemEntity;
 import com.example.persistence.repo.SpringDataInventoryItemJpaRepository;
 import com.example.port.out.InventoryItemRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -23,6 +24,7 @@ public class MemoryInventoryItemRepository implements InventoryItemRepository {
     }
 
     @Override
+    @Transactional
     public boolean save(InventoryItem item, long expectedVersion) {
         int updated = jpaRepository.updateInventory(
                 item.sku(),

@@ -18,7 +18,7 @@ public class DomainEventEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // using long cause String doesn't mix with "identity"
     private String sku;
     private String type;
     private String payload;

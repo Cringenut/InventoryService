@@ -7,6 +7,7 @@ import com.example.port.in.ReserveItemUseCase;
 import com.example.port.out.InventoryItemRepository;
 import com.example.service.InventoryItemService;
 
+// spring free bean injector
 @Configuration
 public class CoreConfig {
 

@@ -22,9 +22,11 @@ public class InventoryController {
             @PathVariable String sku,
             @RequestBody ReserveRequestDto requestDto) {
 
+            // 200
         try {
             reserveItemUseCase.reserve(sku, requestDto.getQty());
             return ResponseEntity.ok().build();
+            // 409
         } catch (ConcurrencyException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }
