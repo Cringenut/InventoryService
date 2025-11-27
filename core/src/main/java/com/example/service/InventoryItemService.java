@@ -13,8 +13,9 @@ public class InventoryItemService implements ReserveItemUseCase {
     }
 
     @Override
-    public void reserve(String sku, int quantity) {
+    public void reserve(String sku, int qty) {
         InventoryItem currentItem = inventoryItemRepository.findBySku(sku).orElse(null);
-        System.out.println("Current item: " + currentItem);
+        InventoryItem changedItem = currentItem.reserve(qty);
+       inventoryItemRepository.save(changedItem);
     }
 }

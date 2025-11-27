@@ -1,10 +1,8 @@
 package com.example.controller;
 
+import com.example.dto.ReserveRequestDto;
 import com.example.port.in.ReserveItemUseCase;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/inventory")
@@ -17,8 +15,8 @@ public class InventoryController {
     }
 
     @PostMapping("/{sku}/reserve")
-    public void reserve(@PathVariable String sku) {
-        reserveItemUseCase.reserve(sku, 6);
+    public void reserve(@PathVariable String sku, @RequestBody ReserveRequestDto requestDto) {
+        reserveItemUseCase.reserve(sku, requestDto.getQty());
     }
 
 }
